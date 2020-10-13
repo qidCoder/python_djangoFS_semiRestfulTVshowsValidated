@@ -1,0 +1,2 @@
+# python_djangoFS_semiRestfulTVshowsValidated
+Coding Dojo Fullstack Django Assignment
