@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'edit.css'%}">
+</head>
+
+<body>
+    <div id="wrapper">
+        <a id="back_button" href="/">Go Back</a>
+
+        <h1>Edit Show {{selected_show.id}}</h1>
+        
+        <!-- adding in validations -->
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{message.tags}}"{% endif %}>{{message}}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}        
+
+        <form method="post" action="/update">
+            {% csrf_token %}
+            <input type="hidden" name='id' value={{selected_show.id}}>
+
+            <label>Title</label>
+            <input type="text" name='title'>
+
+            <div class='inline'>
+                <div class='stacked'>
+                    <label>Network</label>
+                    <input type="text" name='network'>
+                </div>
+
+                <div class='stacked'>
+                    <label>Release Date</label>
+                    <input type="date" name='date'>
+                </div>
+
+            </div>
+
+            <label>Description</label>
+            <textarea rows="10" cols="50" name='desc'></textarea>
+
+            <button type="submit">Update</button>
+        </form>
+        <a href="/shows/{{selected_show.id}}">Go to Show</a>
+    </div>
+
+</body>
+
+</html>

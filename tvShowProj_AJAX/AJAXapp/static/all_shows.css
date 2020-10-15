@@ -1,0 +1,32 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    /* border: 1px dashed hotpink; */
+}
+
+#wrapper{
+    margin: 10px;
+}
+
+/*adds alternating row colors*/
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+td{
+    border: 1px solid black;
+    margin:0;
+    padding: 4px;
+}
+
+table{
+    border-spacing: 0;
+    margin: 10px 0;
+}
+
+#header{
+    font-weight: bold;
+    background-color: rgb(172, 169, 169);
+}

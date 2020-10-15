@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'new_show.css'%}">
+</head>
+<body>
+    <div id="wrapper">
+        <a href="/">Go Back</a>
+
+        <h1>Add a New Show</h1>
+
+        <!-- adding in validations -->
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li {% if message.tags %} class="{{message.tags}}"{% endif %}>{{message}}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+            <div id="error_messages"></div>
+
+
+<!-- adding ids for AJAX  and for jquery to be able to select the form and data fields -->
+        <form method="post" action="/create_new_show" id="new_show_form">
+            {% csrf_token %}
+            <label>Title</label>
+            <input type="text" name = "title" id="title">
+
+            <div class='inline'>
+                <div class='stacked'>
+            <label>Network</label>
+            <input type="text" name='network' id="network">
+            </div>
+
+            <div class='stacked'>
+            <label>Release Date</label>
+            <input type="date" name='date' id="date">
+            </div>
+            
+            </div>
+
+            <label>Description</label>
+            <textarea rows="10" cols="50" name='desc' id="desc"></textarea>
+
+            <button type="submit">Create</button>
+        </form>
+    </div>
+
+    <!-- added for AJAX -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</body>
+
+  <!-- NOW LET'S ADD SOME JAVASCRIPT TO STOP FORM SUBMISSION! -->
+  <script>
+
+      $('#title').keyup(function(e){//jquery's keyup functino detects as you type
+          e.preventDefault()// preventDefault stops the default action of the event (e)from being triggered - in this case refreshing the page
+
+        //make a variable to store whatever the form contains
+          var data = $('#new_show_form').serialize()//extracts the information from the form
+          //now lets send this data to the server in a post request. Send to a new route not already in the URLs.py list. The function will run as soon as a response is received from the post request
+          $.post(
+              '/ajaxVal', data, function(response){
+                  $('#error_messages').html(response)
+
+
+    
+    // check if errors is empty, if not loop through to display error messages
+    // if (response.length > 0){
+    //     $('#error_messages').html('<ul>')
+    //     for (value in response)    {
+    //         $('#error_messages').html('<li>value</li>')
+    //     }
+    //     $('#error_messages').html('</ul>')
+    // }
+
+              }
+          )
+      })
+
+  </script>
+
+</html>
